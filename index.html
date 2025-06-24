@@ -1,4 +1,153 @@
-<a class="weatherwidget-io" href="https://forecast7.com/en/51d05n114d07/calgary/" data-label_1="Calgary" data-font="Ubuntu" data-icons="Climacons" data-theme="beige" data-basecolor="#e9edf3" data-accent="rgba(57, 62, 70, 0.03)" data-textcolor="#6c7783" data-highcolor="#6c7783" data-lowcolor="#6c7783" data-suncolor="#6c7783" data-mooncolor="#6c7783" data-cloudcolor="#6c7783" data-cloudfill="#e9edf3" data-raincolor="#6c7783" data-snowcolor="#6c7783" >Calgary</a>
-<script>
-!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
-</script>
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .cal_calendar {
+    font-family: Verdana;
+        text-shadow: -1px 0 #FF9FD4, 0 1px #FF9FD4, 1px 0 #FF9FD4, 0 -1px #FF9FD4, 0 0;
+	padding: 2px;
+    background-color: transpaarent;
+	width: 100%;
+	margin: auto;
+	height: 100%;
+	color: #FFD0EC;
+}
+.cal_calendar th {
+	border:1px solid #A6B9C9;
+	background: linear-gradient(50deg, #F0F8FF, #F0F8FF);
+    background-color: #F0F8FF;
+	font-size: 12px;
+	border-radius: 3px;
+	color: #D0ECFF;
+  text-shadow: -1px 0 #74B9E7, 0 1px #74B9E7, 1px 0 #74B9E7, 0 -1px #74B9E7, 0 0;
+	box-shadow: inset #E1F1FF 0 0 4px 1px;
+}
+
+.cal_calendar td {
+	border:1px solid #A6B9C9;
+	background:linear-gradient(#F0F8FF 60%, #F0F8FF);
+    background-color: #F0F8FF;
+	text-align:center;
+	font-size: 0.8em;
+	border-radius: 3px;
+	box-shadow: inset white 0 3px 3px, inset #ff7cb945 0 0 2px 1px;
+}
+
+.cal_today {
+	color:#FFE695;
+  text-shadow: -1px 0 #F1B23B, 0 1px #F1B23B, 1px 0 #F1B23B, 0 -1px #F1B23B, 0 0;
+	font-weight:bold;
+}
+
+.cal_days_bef_aft {
+	color:#BFFFBC;
+  text-shadow: -1px 0 #53D54C, 0 1px #53D54C, 1px 0 #53D54C, 0 -1px #53D54C, 0 0;
+}
+    </style>
+  </head>
+  
+  <body>
+    
+    <script>
+      
+      function setStyle(id,style,value)
+{
+    id.style[style] = value;
+}
+function opacity(el,opacity)
+{
+        setStyle(el,"filter:","alpha(opacity="+opacity+")");
+        setStyle(el,"-moz-opacity",opacity/100);
+        setStyle(el,"-khtml-opacity",opacity/100);
+        setStyle(el,"opacity",opacity/100);
+}
+function calendar()
+{
+        var date = new Date();
+        var day = date.getDate();
+        var month = date.getMonth();
+        var year = date.getYear();
+        if(year<=200)
+        {
+                year += 1900;
+        }
+        months = new Array('January', 
+                           'February', 
+                           'March', 
+                           'April', 
+                           'May', 
+                           'June', 
+                           'Jully', 
+                           'August', 
+                           'September', 
+                           'October', 
+                           'November', 
+                           'December');
+    
+        days_in_month = new Array(31,28,31,30,31,30,31,31,30,31,30,31);
+        if(year%4 == 0 && year!=1900)
+        {
+                days_in_month[1]=29;
+        }
+        total = days_in_month[month];
+        var date_today = day+' '+months[month]+' '+year;
+        beg_j = date;
+        beg_j.setDate(1);
+        if(beg_j.getDate()==2)
+        {
+                beg_j=setDate(0);
+        }
+        beg_j = beg_j.getDay();
+        document.write('<table class="cal_calendar" onload="opacity(document.getElementById(\'cal_body\'),20);"><tbody id="cal_body"><tr><th colspan="7">'+date_today+'</th></tr>');
+        document.write('<tr class="cal_d_weeks"><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr>');
+        week = 0;
+        for(i=1;i<=beg_j;i++)
+        {
+                document.write('<td class="cal_days_bef_aft">'+(days_in_month[month-1]-beg_j+i)+'</td>');
+                week++;
+        }
+        for(i=1;i<=total;i++)
+        {
+                if(week==0)
+                {
+                        document.write('<tr>');
+                }
+                if(day==i)
+                {
+                        document.write('<td class="cal_today">'+i+'</td>');
+                }
+                else
+                {
+                        document.write('<td>'+i+'</td>');
+                }
+                week++;
+                if(week==7)
+                {
+                        document.write('</tr>');
+                        week=0;
+                }
+        }
+        for(i=1;week!=0;i++)
+        {
+                document.write('<td class="cal_days_bef_aft">'+i+'</td>');
+                week++;
+                if(week==7)
+                {
+                        document.write('</tr>');
+                        week=0;
+                }
+        }
+        document.write('</tbody></table>');
+        return true;
+}
+      
+    </script>
+    
+    <script type="text/javascript">
+        calendar();
+         </script>
+            <div class="calendar"></div>
+    
+  </body>
+  
+</html>
